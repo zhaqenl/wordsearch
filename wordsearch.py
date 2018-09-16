@@ -17,14 +17,13 @@ tatc' '\n')
 
 
 def matrixify(string_grid, separator=' '):
-    """Convert STRING_GRID into matrix-style list structure (given SEPARATOR-default is ' ')"""
+    """Convert STRING_GRID to matrix (given SEPARATOR-default is ' ')."""
 
     return [list(x) for x in string_grid.split(separator)]
 
 
 def neighbors(coordinate, matrix):
-    """Return neighbor coordinates of COORDINATE inside MATRIX, starting from the upper left
-neighbor."""
+    """Return neighbor coordinates of COORDINATE (inside MATRIX)."""
 
     row_number = coordinate[0]
     column_number = coordinate[1]
@@ -36,7 +35,7 @@ neighbor."""
 
 
 def next_coord_in_line(starting_coordinate, target_coordinate):
-    """Return the next coordinate based on the direction taken from STARTING_COORDINATE to
+    """Return next coordinate based on direction taken from STARTING_COORDINATE to
 TARGET_COORDINATE."""
 
     difference = [target_coordinate[0] - starting_coordinate[0], target_coordinate[1] -
@@ -48,8 +47,7 @@ TARGET_COORDINATE."""
 
 
 def find_base_match(element, matrix):
-    """Return the coordinate of the match of the first letter of WORD_SPLIT in MATRIX if found, None
-if first letter doesn't exist within matrix elements."""
+    """Return coordinate of the match of ELEMENT in MATRIX."""
 
     matrix_coordinates = [[i, j] for i in xrange(len(matrix)) for j in xrange(len(matrix[0]))]
     base_matches = []
@@ -61,11 +59,11 @@ if first letter doesn't exist within matrix elements."""
 
 
 def find_matches(word, string_grid, separator):
-    """Create a matrix of the possible matches of WORD inside MATRIX (through creating coordinates
-from WORD's length)."""
+    """Create matrix of WORD matches against MATRIX (through creating coordinates from WORD's
+length)."""
 
     def convert_to_word(matrix_coord, matrix):
-        """Convert MATRIX_COORD of coordinates inside MATRIX into its word counterpart."""
+        """Convert MATRIX_COORD (of MATRIX) to its word counterpart."""
         word = []
         for first, second in matrix_coord:
             word.append(matrix[first][second])
@@ -86,7 +84,6 @@ from WORD's length)."""
 
 
 def wordsearch(word, string_grid, separator=' '):
-    """Top-level function; Return coordinates of the matches of the elements of WORD against
-STRING_GRID."""
+    """Top-level function; Return coordinates WORD matches against STRING_GRID."""
 
     find_matches(word, string_grid, separator)
