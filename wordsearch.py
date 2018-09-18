@@ -140,7 +140,7 @@ def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
     line = [base_coord, targ_coord]
     difference_1, difference_2 = targ_coord[0] - base_coord[0], targ_coord[1] - base_coord[1]
 
-    while len(line) != word_len:
+    for _ in xrange(word_len - 2):
         line.append((line[-1][0] + difference_1, line[-1][1] + difference_2))
 
     if  0 <= line[-1][0] <= max_row and 0 <= line[-1][1] <= max_column:
