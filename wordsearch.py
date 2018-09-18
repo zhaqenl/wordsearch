@@ -11,7 +11,7 @@ wordsearch('cat', 'catt aata tatc', ' ')
 wordsearch('cat', 'catt;aata;tatc', ';')
 
 If you want to use a newline character as the separator, use the quotaion marks for the docstring
-(replace instances of (triple-quote) with that of the docstring):
+(replace instances of (triple-quote) with that of the docstring's):
 
 
 wordsearch('cat', (triple-quote)catt
@@ -23,8 +23,8 @@ tatc(triple-quote), '\n')
 def matrixify(string_grid, separator='\n'):
     """
     Args:
-        string_grid (str): A string containing none-whitespace and whitespace characters.
-        separator (str): The whitespace character used in string_grid.
+        string_grid (str): A string containing non-whitespace and whitespace characters.
+        separator (str): A whitespace character used in string_grid.
 
     Returns:
         tuple: Returns a tuple mapping (matrix-style) of string_grid.
@@ -187,10 +187,19 @@ def find_matches(word, string_grid, separator='\n'):
         return tuple()
     elif word_len == 1:
         return base_matches
+
     return complex_match(word, matrix, base_matches)
 
 
 def wordsearch(word, string_grid, separator='\n'):
-    """Top-level function; Return coordinates of WORD matches against STRING_GRID."""
+    """
+    Args:
+        word (str): A string of the word to be found.
+        string_grid (str): A string containing none-whitespace and whitespace characters.
+        separator (str): A string which is a whitespace character.
+
+    Returns:
+        int: Returns the amount of matches from find_matches.
+    """
 
     return len(find_matches(word, string_grid, separator))
