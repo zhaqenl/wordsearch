@@ -149,7 +149,7 @@ def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
     return []
 
 
-def complex_match(word, matrix, base_matches, row_length, column_length):
+def complex_match(word, matrix, base_matches, word_len, row_length, column_length):
     """
     Args:
         word (str): A string of the word to be found.
@@ -161,7 +161,7 @@ def complex_match(word, matrix, base_matches, row_length, column_length):
         list: Returns a list of tuple coordinates.
     """
 
-    match_generator = (hybrid_line(base, neighbor, len(word), row_length, column_length)
+    match_generator = (hybrid_line(base, neighbor, word_len, row_length, column_length)
                        for base in base_matches
                        for neighbor in nghbr_coord_extract(neighbors(base, matrix, row_length,
                                                                      column_length), word[1]))
@@ -190,7 +190,7 @@ def find_matches(word, string_grid, separator='\n'):
     elif word_len == 1:
         return base_matches
 
-    return complex_match(word, matrix, base_matches, row_length, column_length)
+    return complex_match(word, matrix, base_matches, word_len, row_length, column_length)
 
 
 def wordsearch(word, string_grid, separator='\n'):
