@@ -87,7 +87,7 @@ def neighbors(coord, matrix):
         matrix (tuple): A tuple containing a tuple of coordinates.
 
     Returns:
-        dict: Returns a dict containing the a {coordinate: char} pair of the neighbors of coord
+        dict: Returns a dict containing a {coordinate: char} pair of the neighbors of coord
               inside matrix.
     """
 
@@ -98,7 +98,7 @@ def neighbors(coord, matrix):
                              and column < len(matrix[0]) and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
 
-    return dict(zip(neighbors_coordinates, neighbors_char))
+    return zip(neighbors_coordinates, neighbors_char)
 
 
 def nghbr_coord_extract(base_match_neighbors, char):
@@ -111,12 +111,12 @@ def nghbr_coord_extract(base_match_neighbors, char):
                        dict.
 
     Returns:
-        tuple: Returns a tuple containing the coordinates where char matched.
+        list: Returns a list containing the coordinates where char matched.
     """
 
-    coord_list = [key for key, value in base_match_neighbors.viewitems() if value == char]
+    coord_list = [key for key, value in base_match_neighbors if value == char]
 
-    return tuple(coord_list)
+    return coord_list
 
 
 def hybrid_line(base_coord, targ_coord, word_len, matrix):
@@ -128,9 +128,9 @@ def hybrid_line(base_coord, targ_coord, word_len, matrix):
         matrix (tuple): A tuple containing tuples containing single-length strings.
 
     Returns:
-        tuple: Returns a tuple, containing tuple coordinates, with word_len length and is a straight
-               line when represented in a matrix; Retuns empty tuple if created tuple's last element
-               is out of matrix bounds.
+        list: Returns a list, containing tuple coordinates, with word_len length and is a straight
+              line when represented in a matrix; Retuns empty tuple if created tuple's last element
+              is out of matrix bounds.
     """
 
     if word_len == 2:
@@ -144,9 +144,9 @@ def hybrid_line(base_coord, targ_coord, word_len, matrix):
         line.append((line[-1][0] + difference_1, line[-1][1] + difference_2))
 
     if  0 <= line[-1][0] <= max_row and 0 <= line[-1][1] <= max_column:
-        return tuple(line)
+        return line
 
-    return tuple()
+    return []
 
 
 def complex_match(word, matrix, base_matches):
