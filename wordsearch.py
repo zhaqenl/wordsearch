@@ -62,7 +62,7 @@ def convert_to_word(coord_matrix, matrix):
 
 
 
-def find_base_match(element, matrix):
+def find_base_match(element, matrix, row_length, column_length):
     """
     Args:
         element (str): A single length string
@@ -72,15 +72,15 @@ def find_base_match(element, matrix):
         tuple: Returns a coordinate tuple.
     """
 
-    matrix_coordinates = [(row, column) for row in xrange(len(matrix)) for column
-                          in xrange(len(matrix[0]))]
+    matrix_coordinates = [(row, column) for row in xrange(row_length) for column
+                          in xrange(column_length)]
     base_matches = [coordinate for coordinate in matrix_coordinates
                     if element == coord_char(coordinate, matrix)]
 
     return tuple(base_matches)
 
 
-def neighbors(coord, matrix):
+def neighbors(coord, matrix, row_length, column_length):
     """
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
@@ -94,8 +94,8 @@ def neighbors(coord, matrix):
     row_number, column_number = coord
     neighbors_coordinates = [(row, column) for row in xrange(row_number-1, row_number+2)
                              for column in xrange(column_number-1, column_number+2)
-                             if row >= 0 and row < len(matrix) and column >= 0
-                             and column < len(matrix[0]) and not (row, column) == coord]
+                             if row >= 0 and row < row_length and column >= 0
+                             and column < column_length and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
 
     return zip(neighbors_coordinates, neighbors_char)
@@ -119,7 +119,7 @@ def nghbr_coord_extract(base_match_neighbors, char):
     return coord_list
 
 
-def hybrid_line(base_coord, targ_coord, word_len, matrix):
+def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
     """
     Args:
         base_coord (tuple): A coordinate tuple of the starting position.
@@ -136,7 +136,7 @@ def hybrid_line(base_coord, targ_coord, word_len, matrix):
     if word_len == 2:
         return base_coord, targ_coord
 
-    max_row, max_column = len(matrix) - 1, len(matrix[0]) - 1
+    max_row, max_column = row_length - 1, column_length - 1
     line = [base_coord, targ_coord]
     difference_1, difference_2 = targ_coord[0] - base_coord[0], targ_coord[1] - base_coord[1]
 
@@ -149,7 +149,7 @@ def hybrid_line(base_coord, targ_coord, word_len, matrix):
     return []
 
 
-def complex_match(word, matrix, base_matches):
+def complex_match(word, matrix, base_matches, row_length, column_length):
     """
     Args:
         word (str): A string of the word to be found.
@@ -161,9 +161,10 @@ def complex_match(word, matrix, base_matches):
         list: Returns a list of tuple coordinates.
     """
 
-    match_generator = (hybrid_line(base, neighbor, len(word), matrix)
+    match_generator = (hybrid_line(base, neighbor, len(word), row_length, column_length)
                        for base in base_matches
-                       for neighbor in nghbr_coord_extract(neighbors(base, matrix), word[1]))
+                       for neighbor in nghbr_coord_extract(neighbors(base, matrix, row_length,
+                                                                     column_length), word[1]))
 
     return [match for match in match_generator if convert_to_word(match, matrix) == word]
 
@@ -181,14 +182,15 @@ def find_matches(word, string_grid, separator='\n'):
 
     word_len = len(word)
     matrix = matrixify(string_grid, separator)
-    base_matches = find_base_match(word[0], matrix)
+    row_length, column_length = len(matrix), len(matrix[0])
+    base_matches = find_base_match(word[0], matrix, row_length, column_length)
 
-    if word_len > len(matrix) and word_len > len(matrix[0]) or not base_matches:
+    if word_len > row_length and word_len > column_length or not base_matches:
         return tuple()
     elif word_len == 1:
         return base_matches
 
-    return complex_match(word, matrix, base_matches)
+    return complex_match(word, matrix, base_matches, row_length, column_length)
 
 
 def wordsearch(word, string_grid, separator='\n'):
