@@ -1,3 +1,5 @@
 default.nix
-wordsearch.pyc
-.*~
+*.pyc
+*.*~
+function_graveyard.py
+input_data.py
