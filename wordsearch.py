@@ -58,7 +58,8 @@ def convert_to_word(coord_matrix, matrix):
         tuple: Returns tuple of strings.
     """
 
-    return tuple([coord_char(coord, matrix) for coord in coord_matrix])
+    return ''.join([coord_char(coord, matrix) for coord in coord_matrix])
+
 
 
 def find_base_match(element, matrix):
@@ -178,7 +179,6 @@ def find_matches(word, string_grid, separator='\n'):
         tuple: Returns tuple matrix of the coordinates matches of word against string_grid.
     """
 
-    word = tuple(word)
     word_len = len(word)
     matrix = matrixify(string_grid, separator)
     base_matches = find_base_match(word[0], matrix)
