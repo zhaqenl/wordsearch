@@ -158,11 +158,9 @@ def complex_match(word, matrix, base_matches):
         list: Returns a list of tuple coordinates.
     """
 
-
     match_generator = (hybrid_line(base, neighbor, len(word), matrix)
                        for base in base_matches
                        for neighbor in nghbr_coord_extract(neighbors(base, matrix), word[1]))
-
 
     return [match for match in match_generator if convert_to_word(match, matrix) == word]
 
