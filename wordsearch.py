@@ -30,7 +30,7 @@ def matrixify(string_grid, separator='\n'):
         tuple: Returns a tuple mapping (matrix-style) of string_grid.
     """
 
-    return tuple(string_grid.split(separator))
+    return string_grid.split(separator)
 
 
 def coord_char(coord, matrix):
