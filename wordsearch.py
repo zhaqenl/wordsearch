@@ -10,11 +10,13 @@ wordsearch('cat', 'catt aata tatc', ' ')
 
 wordsearch('cat', 'catt;aata;tatc', ';')
 
-If you want to use a newline character as the separator, use the !!!
+If you want to use a newline character as the separator, use the quotaion marks for the docstring
+(replace instances of (triple-quote) with that of the docstring):
 
-wordsearch('cat', 'catt
+
+wordsearch('cat', (triple-quote)catt
 aata
-tatc' '\n')
+tatc(triple-quote), '\n')
 """
 
 
