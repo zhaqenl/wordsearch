@@ -87,15 +87,15 @@ def neighbors(coord, matrix, row_length, column_length):
         matrix (tuple): A tuple containing a tuple of coordinates.
 
     Returns:
-        dict: Returns a dict containing a {coordinate: char} pair of the neighbors of coord
-              inside matrix.
+        list: Returns a list containing tuple pairs of the neighbors of coord, with their
+corresponding character equivalents inside matrix.
     """
 
     row_number, column_number = coord
     neighbors_coordinates = [(row, column) for row in xrange(row_number-1, row_number+2)
                              for column in xrange(column_number-1, column_number+2)
-                             if row >= 0 and row < row_length and column >= 0
-                             and column < column_length and not (row, column) == coord]
+                             if row_length > row >= 0 and column_length > column >= 0
+                             and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
 
     return zip(neighbors_coordinates, neighbors_char)
@@ -153,7 +153,7 @@ def complex_match(word, matrix, base_matches, word_len, row_length, column_lengt
     """
     Args:
         word (str): A string of the word to be found.
-        matrix (tuple): A tuple containing tuples containing single-Length strings.
+        matrix (tuple): A tuple containing tuples containing single-length strings.
         base_matches (tuple): A tuple containing tuple coordinates of the match of word[0] inside
                               matrix.
 
