@@ -72,10 +72,8 @@ def find_base_match(element, matrix, row_length, column_length):
         list: Returns a coordinate list.
     """
 
-    matrix_coordinates = [(row, column) for row in xrange(row_length) for column
-                          in xrange(column_length)]
-    base_matches = [coordinate for coordinate in matrix_coordinates
-                    if element == coord_char(coordinate, matrix)]
+    base_matches = [(row, column) for row in xrange(row_length) for column
+                    in xrange(column_length) if coord_char((row, column), matrix) == element]
 
     return base_matches
 
