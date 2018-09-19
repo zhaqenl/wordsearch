@@ -69,7 +69,7 @@ def find_base_match(element, matrix, row_length, column_length):
         matrix (tuple): A tuple containing a tuple of coordinates.
 
     Returns:
-        tuple: Returns a coordinate tuple.
+        list: Returns a coordinate list.
     """
 
     matrix_coordinates = [(row, column) for row in xrange(row_length) for column
@@ -77,7 +77,7 @@ def find_base_match(element, matrix, row_length, column_length):
     base_matches = [coordinate for coordinate in matrix_coordinates
                     if element == coord_char(coordinate, matrix)]
 
-    return tuple(base_matches)
+    return base_matches
 
 
 def neighbors(coord, matrix, row_length, column_length):
