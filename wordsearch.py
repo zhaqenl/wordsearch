@@ -20,6 +20,9 @@ tatc(triple-quote), '\n')
 """
 
 
+from itertools import izip
+
+
 def matrixify(string_grid, separator='\n'):
     """
     Args:
@@ -27,7 +30,7 @@ def matrixify(string_grid, separator='\n'):
         separator (str): A whitespace character used in string_grid.
 
     Returns:
-        tuple: Returns a tuple mapping (matrix-style) of string_grid.
+        list: Returns list of the strings of string_grid separated at its whitespace.
     """
 
     return string_grid.split(separator)
@@ -55,25 +58,24 @@ def convert_to_word(coord_matrix, matrix):
         matrix (tuple): A tuple containing a tuple of characters.
 
     Returns:
-        tuple: Returns tuple of strings.
+        str: Returns string equivalent of coord_matrix.
     """
 
     return ''.join([coord_char(coord, matrix) for coord in coord_matrix])
 
 
-
 def find_base_match(element, matrix, row_length, column_length):
     """
     Args:
-        element (str): A single length string
+        element (str): A single-length string
         matrix (tuple): A tuple containing a tuple of coordinates.
 
     Returns:
         list: Returns a coordinate list.
     """
 
-    base_matches = [(row, column) for row in xrange(row_length) for column
-                    in xrange(column_length) if coord_char((row, column), matrix) == element]
+    base_matches = [(row, column) for row in xrange(row_length) for column in xrange(column_length)
+                    if coord_char((row, column), matrix) == element]
 
     return base_matches
 
@@ -85,8 +87,8 @@ def neighbors(coord, matrix, row_length, column_length):
         matrix (tuple): A tuple containing a tuple of coordinates.
 
     Returns:
-        list: Returns a list containing tuple pairs of the neighbors of coord, with their
-corresponding character equivalents inside matrix.
+        itertools.izip: Returns an itertools.izip object containing pairs of the neighbors of coord,
+with their corresponding character equivalents inside matrix.
     """
 
     row_number, column_number = coord
@@ -96,17 +98,16 @@ corresponding character equivalents inside matrix.
                              and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
 
-    return zip(neighbors_coordinates, neighbors_char)
+    return izip(neighbors_coordinates, neighbors_char)
 
 
 def nghbr_coord_extract(base_match_neighbors, char):
     """
     Args:
         base_match_coordinate (tuple): A coordinate tuple of the location of the base match.
-        base_match_neighbors (dict): A dictionary containing a {coordinate: char} pair of the
+        base_match_neighbors (list): A list containing a (coordinate, char) tuple of the
                                      neighbors of base_match_coordinate.
-        char (string): A single-length string to find inside the values of base_match_neighbors
-                       dict.
+        char (string): A single-length string to find inside the values of base_match_neighbors.
 
     Returns:
         list: Returns a list containing the coordinates where char matched.
@@ -122,8 +123,9 @@ def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
     Args:
         base_coord (tuple): A coordinate tuple of the starting position.
         targ_coord (tuple): A coordinate tuple of the target position.
-        word_len (int): An int which represents the length of the return tuple value.
-        matrix (tuple): A tuple containing tuples containing single-length strings.
+        word_len (int): An integer which represents the length of the return tuple value.
+        row_length (int): An integer which represents the height of the matrix.
+        column_length (int): An integer which represents the horizontal length of the matrix.
 
     Returns:
         list: Returns a list, containing tuple coordinates, with word_len length and is a straight
@@ -136,10 +138,10 @@ def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
 
     max_row, max_column = row_length - 1, column_length - 1
     line = [base_coord, targ_coord]
-    difference_1, difference_2 = targ_coord[0] - base_coord[0], targ_coord[1] - base_coord[1]
+    diff_1, diff_2 = targ_coord[0] - base_coord[0], targ_coord[1] - base_coord[1]
 
     for _ in xrange(word_len - 2):
-        line.append((line[-1][0] + difference_1, line[-1][1] + difference_2))
+        line += [(line[-1][0] + diff_1, line[-1][1] + diff_2)]
 
     if  0 <= line[-1][0] <= max_row and 0 <= line[-1][1] <= max_column:
         return line
@@ -151,9 +153,12 @@ def complex_match(word, matrix, base_matches, word_len, row_length, column_lengt
     """
     Args:
         word (str): A string of the word to be found.
-        matrix (tuple): A tuple containing tuples containing single-length strings.
-        base_matches (tuple): A tuple containing tuple coordinates of the match of word[0] inside
-                              matrix.
+        matrix (list): A list containing strings separated at their whitespace characters.
+        base_matches (list): A list containing tuple coordinates of the match of word[0] inside
+                             matrix.
+        word_len (int): Length of word.
+        row_length (int): An integer which represents the height of the matrix.
+        column_length (int): An integer which represents the horizontal length of the matrix.
 
     Returns:
         list: Returns a list of tuple coordinates.
@@ -171,11 +176,11 @@ def find_matches(word, string_grid, separator='\n'):
     """
     Args:
         word (str): A string of the word to be found.
-        string_grid (str): A string containing none-whitespace and whitespace characters.
+        string_grid (str): A string containing non-whitespace and whitespace characters.
         separator (str): A string which is a whitespace character.
 
     Returns:
-        tuple: Returns tuple matrix of the coordinates matches of word against string_grid.
+        list: Returns list matrix of the coordinate matches of word against string_grid.
     """
 
     word_len = len(word)
@@ -184,7 +189,7 @@ def find_matches(word, string_grid, separator='\n'):
     base_matches = find_base_match(word[0], matrix, row_length, column_length)
 
     if word_len > row_length and word_len > column_length or not base_matches:
-        return tuple()
+        return []
     elif word_len == 1:
         return base_matches
 
@@ -195,7 +200,7 @@ def wordsearch(word, string_grid, separator='\n'):
     """
     Args:
         word (str): A string of the word to be found.
-        string_grid (str): A string containing none-whitespace and whitespace characters.
+        string_grid (str): A string containing non-whitespace and whitespace characters.
         separator (str): A string which is a whitespace character.
 
     Returns:
