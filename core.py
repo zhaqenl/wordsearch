@@ -96,7 +96,7 @@ with their corresponding character equivalents inside matrix.
                              if row_length > row >= 0 and column_length > column >= 0
                              and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
-    
+
     return izip(neighbors_coordinates, neighbors_char)
 
 
@@ -183,7 +183,7 @@ def find_matches(word, string_grid, separator='\n'):
     """
 
     word_len = len(word)
-    if type(string_grid) == list:
+    if isinstance(string_grid, list):
         matrix = string_grid
     else:
         matrix = matrixify(string_grid, separator)
