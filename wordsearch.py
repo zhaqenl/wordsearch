@@ -1,20 +1,35 @@
 """
+Script to handle wordsearch input files with the following format:
 
+'Number of cases'
+'String grid height'
+'String grid width'
+'String grid'
+'Word to find'
+...
+...
+...
+
+Simply run:
+
+python wordsearch.py `input_file.txt`
 """
 
 
-import core
-import input_data
+import sys
 import argparse
+import core
 
-parser = argparse.ArgumentParser()
-parser.add_argument('filename')
-args = parser.parse_args()
+PARSER = argparse.ArgumentParser()
+PARSER.add_argument('filename')
+ARGS = PARSER.parse_args()
 
-with open(args.filename) as f:
-    case_count = f.readline().strip('\n')
-    for case in xrange(int(case_count)):
-        print 'Case ' + str(case + 1) + ': ',
+with open(ARGS.filename) as f:
+    CASE_COUNT = f.readline().strip('\n')
+    for case in xrange(int(CASE_COUNT)):
+        sys.stdout.write('Case ')
+        sys.stdout.write(str(case + 1))
+        sys.stdout.write(': ')
         grid = []
         grid_height_limit = int(f.readline().strip('\n'))
         grid_width = int(f.readline().strip('\n'))
@@ -22,3 +37,4 @@ with open(args.filename) as f:
             grid += [f.readline().strip('\n')]
         word = f.readline().strip('\n')
         print core.wordsearch(word, grid)
+    sys.stdout.flush()
