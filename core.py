@@ -13,7 +13,6 @@ wordsearch('cat', 'catt;aata;tatc', ';')
 If you want to use a newline character as the separator, use the quotaion marks for the docstring
 (replace instances of (triple-quote) with that of the docstring's):
 
-
 wordsearch('cat', (triple-quote)catt
 aata
 tatc(triple-quote), '\n')
@@ -97,7 +96,7 @@ with their corresponding character equivalents inside matrix.
                              if row_length > row >= 0 and column_length > column >= 0
                              and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
-
+    
     return izip(neighbors_coordinates, neighbors_char)
 
 
@@ -184,7 +183,10 @@ def find_matches(word, string_grid, separator='\n'):
     """
 
     word_len = len(word)
-    matrix = matrixify(string_grid, separator)
+    if type(string_grid) == list:
+        matrix = string_grid
+    else:
+        matrix = matrixify(string_grid, separator)
     row_length, column_length = len(matrix), len(matrix[0])
     base_matches = find_base_match(word[0], matrix, row_length, column_length)
 
