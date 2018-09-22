@@ -63,18 +63,20 @@ def convert_to_word(coord_matrix, matrix):
     return ''.join([coord_char(coord, matrix) for coord in coord_matrix])
 
 
-def find_base_match(element, matrix, row_length, column_length):
+def find_base_match(char, matrix, row_length, column_length):
     """
     Args:
-        element (str): A single-length string
+        char (str): A single-length string
         matrix (tuple): A tuple containing a tuple of coordinates.
+        row_length (int): An integer which represents the height of the matrix.
+        column_length (int): An integer which represents the horizontal length of the matrix.
 
     Returns:
         list: Returns a coordinate list.
     """
 
     base_matches = [(row, column) for row in xrange(row_length) for column in xrange(column_length)
-                    if coord_char((row, column), matrix) == element]
+                    if coord_char((row, column), matrix) == char]
 
     return base_matches
 
@@ -84,6 +86,8 @@ def neighbors(coord, matrix, row_length, column_length):
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
         matrix (tuple): A tuple containing a tuple of coordinates.
+        row_length (int): An integer which represents the height of the matrix.
+        column_length (int): An integer which represents the horizontal length of the matrix.
 
     Returns:
         itertools.izip: Returns an itertools.izip object containing pairs of the neighbors of coord,
@@ -91,8 +95,8 @@ with their corresponding character equivalents inside matrix.
     """
 
     row_number, column_number = coord
-    neighbors_coordinates = [(row, column) for row in xrange(row_number-1, row_number+2)
-                             for column in xrange(column_number-1, column_number+2)
+    neighbors_coordinates = [(row, column) for row in xrange(row_number - 1, row_number + 2)
+                             for column in xrange(column_number - 1, column_number + 2)
                              if row_length > row >= 0 and column_length > column >= 0
                              and not (row, column) == coord]
     neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
@@ -128,8 +132,8 @@ def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
 
     Returns:
         list: Returns a list, containing tuple coordinates, with word_len length and is a straight
-              line when represented in a matrix; Retuns empty tuple if created tuple's last element
-              is out of matrix bounds.
+              line when represented in a matrix; Retuns empty tuple if tuple's last coordinate is
+              out of matrix bounds.
     """
 
     if word_len == 2:
