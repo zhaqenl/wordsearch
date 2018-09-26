@@ -63,7 +63,7 @@ def convert_to_word(coord_matrix, matrix):
     return ''.join([coord_char(coord, matrix) for coord in coord_matrix])
 
 
-def find_base_match(char, matrix, row_length, column_length):
+def find_base_match(char, matrix):
     """
     Args:
         char (str): A single-length string
@@ -75,8 +75,9 @@ def find_base_match(char, matrix, row_length, column_length):
         list: Returns a coordinate list.
     """
 
-    base_matches = [(row, column) for row in xrange(row_length) for column in xrange(column_length)
-                    if coord_char((row, column), matrix) == char]
+    base_matches = [(row_index, column_index) for row_index, row in enumerate(matrix)
+                    for column_index, column in enumerate(row)
+                    if char == column]
 
     return base_matches
 
@@ -192,7 +193,7 @@ def find_matches(word, string_grid, separator='\n'):
     else:
         matrix = matrixify(string_grid, separator)
     row_length, column_length = len(matrix), len(matrix[0])
-    base_matches = find_base_match(word[0], matrix, row_length, column_length)
+    base_matches = find_base_match(word[0], matrix)
 
     if column_length < word_len > row_length or not base_matches:
         return []
