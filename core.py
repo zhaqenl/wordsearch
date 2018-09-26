@@ -39,7 +39,7 @@ def coord_char(coord, matrix):
     """
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
-        matrix (tuple): A tuple containing a tuple of characters.
+        matrix (list): A list containing lines of string.
 
     Returns:
         str: Returns the string located in the matrix coord.
@@ -54,7 +54,7 @@ def convert_to_word(coord_matrix, matrix):
     """
     Args:
         coord_matrix (tuple): A tuple of coordinate tuples.
-        matrix (tuple): A tuple containing a tuple of characters.
+        matrix (list): A list containing lines of string.
 
     Returns:
         str: Returns string equivalent of coord_matrix.
@@ -67,7 +67,7 @@ def find_base_match(char, matrix):
     """
     Args:
         char (str): A single-length string
-        matrix (tuple): A tuple containing a tuple of coordinates.
+        matrix (list): A list containing lines of string.
         row_length (int): An integer which represents the height of the matrix.
         column_length (int): An integer which represents the horizontal length of the matrix.
 
@@ -86,7 +86,7 @@ def neighbors(coord, matrix, row_length, column_length):
     """
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
-        matrix (tuple): A tuple containing a tuple of coordinates.
+        matrix (list): A list containing lines of string.
         row_length (int): An integer which represents the height of the matrix.
         column_length (int): An integer which represents the horizontal length of the matrix.
 
@@ -157,7 +157,7 @@ def complex_match(word, matrix, base_matches, word_len, row_length, column_lengt
     """
     Args:
         word (str): A string of the word to be found.
-        matrix (list): A list containing strings separated at their whitespace characters.
+        matrix (list): A list containing lines of string.
         base_matches (list): A list containing tuple coordinates of the match of word[0] inside
                              matrix.
         word_len (int): Length of word.
