@@ -194,7 +194,7 @@ def find_matches(word, string_grid, separator='\n'):
     row_length, column_length = len(matrix), len(matrix[0])
     base_matches = find_base_match(word[0], matrix, row_length, column_length)
 
-    if word_len > row_length and word_len > column_length or not base_matches:
+    if column_length < word_len > row_length or not base_matches:
         return []
     elif word_len == 1:
         return base_matches
