@@ -79,45 +79,27 @@ def find_base_match(char, matrix):
     return base_matches
 
 
-def neighbors(coord, row_length, column_length):
+def matched_neighbors(coord, second_char, matrix, row_length, column_length):
     """
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
+        second_char (str): The second character of the word.
         matrix (list): A list containing lines of string.
         row_length (int): An integer which represents the height of the matrix.
         column_length (int): An integer which represents the horizontal length of the matrix.
 
     Returns:
-        itertools.izip: Returns an itertools.izip object containing pairs of the neighbors of coord,
-with their corresponding character equivalents inside matrix.
+        list: Returns a list containing the coordinates where second_char matched, inside matrix.
     """
 
     row_number, column_number = coord
     neighbors_coordinates = [(row, column) for row in xrange(row_number - 1, row_number + 2)
                              for column in xrange(column_number - 1, column_number + 2)
                              if row_length > row >= 0 and column_length > column >= 0
+                             and coord_char((row, column), matrix) == second_char
                              and not (row, column) == coord]
 
     return neighbors_coordinates
-
-
-def nghbr_coord_extract(base_match_neighbors, second_char, matrix):
-    """
-    Args:
-        base_match_coordinate (tuple): A coordinate tuple of the location of the base match.
-        base_match_neighbors (list): A list containing a (coordinate, char) tuple of the
-                                     neighbors of base_match_coordinate.
-        second_char (string): The second character of the hidden word to find inside the values of
-base_match_neighbors.
-
-    Returns:
-        list: Returns a list containing the coordinates where char matched.
-    """
-
-    coord_list = [coord for coord in base_match_neighbors
-                  if coord_char(coord, matrix) == second_char]
-
-    return coord_list
 
 
 def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
@@ -168,9 +150,8 @@ def complex_match(word, matrix, base_matches, word_len, row_length, column_lengt
 
     match_generator = (hybrid_line(base, neighbor, word_len, row_length, column_length)
                        for base in base_matches
-                       for neighbor in nghbr_coord_extract(neighbors(base, row_length,
-                                                                     column_length), word[1],
-                                                           matrix))
+                       for neighbor in matched_neighbors(base, word[1], matrix, row_length,
+                                                         column_length))
 
     return [match for match in match_generator if convert_to_word(match, matrix) == word]
 
