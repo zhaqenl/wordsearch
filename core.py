@@ -102,7 +102,7 @@ def matched_neighbors(coord, second_char, matrix, row_length, column_length):
     return neighbors_coordinates
 
 
-def hybrid_line(base_coord, targ_coord, word_len, row_length, column_length):
+def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
     """
     Args:
         base_coord (tuple): A coordinate tuple of the starting position.
@@ -148,7 +148,7 @@ def complex_match(word, matrix, base_matches, word_len, row_length, column_lengt
         list: Returns a list of tuple coordinates.
     """
 
-    match_generator = (hybrid_line(base, neighbor, word_len, row_length, column_length)
+    match_generator = (complete_line(base, neighbor, word_len, row_length, column_length)
                        for base in base_matches
                        for neighbor in matched_neighbors(base, word[1], matrix, row_length,
                                                          column_length))
