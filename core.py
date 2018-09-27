@@ -132,7 +132,7 @@ def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
     return []
 
 
-def complex_match(word, matrix, base_matches, word_len, row_length, column_length):
+def complete_match(word, matrix, base_matches, word_len, row_length, column_length):
     """
     Args:
         word (str): A string of the word to be found.
@@ -179,7 +179,7 @@ def find_matches(word, string_grid, separator='\n'):
     elif word_len == 1:
         return base_matches
 
-    return complex_match(word, matrix, base_matches, word_len, row_length, column_length)
+    return complete_match(word, matrix, base_matches, word_len, row_length, column_length)
 
 
 def wordsearch(word, string_grid, separator='\n'):
