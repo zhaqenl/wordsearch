@@ -19,9 +19,6 @@ tatc(triple duoble quote), '\n')
 """
 
 
-from itertools import izip
-
-
 def matrixify(string_grid, separator='\n'):
     """
     Args:
@@ -82,7 +79,7 @@ def find_base_match(char, matrix):
     return base_matches
 
 
-def neighbors(coord, matrix, row_length, column_length):
+def neighbors(coord, row_length, column_length):
     """
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
@@ -100,12 +97,11 @@ with their corresponding character equivalents inside matrix.
                              for column in xrange(column_number - 1, column_number + 2)
                              if row_length > row >= 0 and column_length > column >= 0
                              and not (row, column) == coord]
-    neighbors_char = [coord_char(neighbor, matrix) for neighbor in neighbors_coordinates]
 
-    return izip(neighbors_coordinates, neighbors_char)
+    return neighbors_coordinates
 
 
-def nghbr_coord_extract(base_match_neighbors, second_char):
+def nghbr_coord_extract(base_match_neighbors, second_char, matrix):
     """
     Args:
         base_match_coordinate (tuple): A coordinate tuple of the location of the base match.
@@ -118,7 +114,7 @@ base_match_neighbors.
         list: Returns a list containing the coordinates where char matched.
     """
 
-    coord_list = [key for key, value in base_match_neighbors if value == second_char]
+    coord_list = [key for key in base_match_neighbors if coord_char(key, matrix) == second_char]
 
     return coord_list
 
@@ -171,8 +167,9 @@ def complex_match(word, matrix, base_matches, word_len, row_length, column_lengt
 
     match_generator = (hybrid_line(base, neighbor, word_len, row_length, column_length)
                        for base in base_matches
-                       for neighbor in nghbr_coord_extract(neighbors(base, matrix, row_length,
-                                                                     column_length), word[1]))
+                       for neighbor in nghbr_coord_extract(neighbors(base, row_length,
+                                                                     column_length), word[1],
+                                                           matrix))
 
     return [match for match in match_generator if convert_to_word(match, matrix) == word]
 
