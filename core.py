@@ -147,12 +147,12 @@ def complete_match(word, matrix, base_matches, word_len, row_length, column_leng
         list: Returns a list of tuple coordinates.
     """
 
-    match_generator = (complete_line(base, neighbor, word_len, row_length, column_length)
+    match_candidates = (complete_line(base, neighbor, word_len, row_length, column_length)
                        for base in base_matches
                        for neighbor in matched_neighbors(base, word[1], matrix, row_length,
                                                          column_length))
 
-    return [match for match in match_generator if convert_to_word(match, matrix) == word]
+    return [match for match in match_candidates if convert_to_word(match, matrix) == word]
 
 
 def find_matches(word, string_grid, separator='\n'):
