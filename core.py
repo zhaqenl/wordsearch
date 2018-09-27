@@ -120,14 +120,13 @@ def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
     if word_len == 2:
         return base_coord, targ_coord
 
-    max_row, max_column = row_length - 1, column_length - 1
     line = [base_coord, targ_coord]
     diff_1, diff_2 = targ_coord[0] - base_coord[0], targ_coord[1] - base_coord[1]
 
     for _ in xrange(word_len - 2):
         line += [(line[-1][0] + diff_1, line[-1][1] + diff_2)]
 
-    if  0 <= line[-1][0] <= max_row and 0 <= line[-1][1] <= max_column:
+    if  0 <= line[-1][0] < row_length and 0 <= line[-1][1] < column_length:
         return line
 
     return []
