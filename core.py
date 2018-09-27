@@ -53,7 +53,7 @@ def coord_char(coord, matrix):
 def convert_to_word(coord_matrix, matrix):
     """
     Args:
-        coord_matrix (tuple): A tuple of coordinate tuples.
+        coord_matrix (list): A list of coordinate tuples.
         matrix (list): A list containing lines of string.
 
     Returns:
