@@ -114,7 +114,8 @@ base_match_neighbors.
         list: Returns a list containing the coordinates where char matched.
     """
 
-    coord_list = [key for key in base_match_neighbors if coord_char(key, matrix) == second_char]
+    coord_list = [coord for coord in base_match_neighbors
+                  if coord_char(coord, matrix) == second_char]
 
     return coord_list
 
