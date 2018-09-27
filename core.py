@@ -105,19 +105,20 @@ with their corresponding character equivalents inside matrix.
     return izip(neighbors_coordinates, neighbors_char)
 
 
-def nghbr_coord_extract(base_match_neighbors, char):
+def nghbr_coord_extract(base_match_neighbors, second_char):
     """
     Args:
         base_match_coordinate (tuple): A coordinate tuple of the location of the base match.
         base_match_neighbors (list): A list containing a (coordinate, char) tuple of the
                                      neighbors of base_match_coordinate.
-        char (string): A single-length string to find inside the values of base_match_neighbors.
+        second_char (string): The second character of the hidden word to find inside the values of
+base_match_neighbors.
 
     Returns:
         list: Returns a list containing the coordinates where char matched.
     """
 
-    coord_list = [key for key, value in base_match_neighbors if value == char]
+    coord_list = [key for key, value in base_match_neighbors if value == second_char]
 
     return coord_list
 
