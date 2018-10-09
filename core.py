@@ -93,8 +93,8 @@ def matched_neighbors(coord, second_char, matrix, row_length, column_length):
     """
 
     row_number, column_number = coord
-    neighbors_coordinates = [(row, column) for row in xrange(row_number - 1, row_number + 2)
-                             for column in xrange(column_number - 1, column_number + 2)
+    neighbors_coordinates = [(row, column) for row in range(row_number - 1, row_number + 2)
+                             for column in range(column_number - 1, column_number + 2)
                              if row_length > row >= 0 and column_length > column >= 0
                              and coord_char((row, column), matrix) == second_char
                              and not (row, column) == coord]
@@ -123,7 +123,7 @@ def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
     line = [base_coord, targ_coord]
     diff_1, diff_2 = targ_coord[0] - base_coord[0], targ_coord[1] - base_coord[1]
 
-    for _ in xrange(word_len - 2):
+    for _ in range(word_len - 2):
         line += [(line[-1][0] + diff_1, line[-1][1] + diff_2)]
 
     if  0 <= line[-1][0] < row_length and 0 <= line[-1][1] < column_length:

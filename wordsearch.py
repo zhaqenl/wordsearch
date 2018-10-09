@@ -26,15 +26,15 @@ ARGS = PARSER.parse_args()
 
 with open(ARGS.filename) as f:
     CASE_COUNT = f.readline().strip('\n')
-    for case in xrange(int(CASE_COUNT)):
+    for case in range(int(CASE_COUNT)):
         sys.stdout.write('Case ')
         sys.stdout.write(str(case + 1))
         sys.stdout.write(': ')
         grid = []
         grid_height_limit = int(f.readline().strip('\n'))
         grid_width = int(f.readline().strip('\n'))
-        for _ in xrange(grid_height_limit):
+        for _ in range(grid_height_limit):
             grid += [f.readline().strip('\n')]
         word = f.readline().strip('\n')
-        print core.wordsearch(word, grid)
+        print(core.wordsearch(word, grid))
     sys.stdout.flush()
