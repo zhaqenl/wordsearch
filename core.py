@@ -1,4 +1,5 @@
-"""
+"""This module contains the core functions needed by wordsearch.py.
+
 Top-level function takes 3 arguments, with the third one, being optional, that acts as the
 separator indicator used for the second argument (default is ' ').
 
@@ -10,17 +11,19 @@ wordsearch('cat', 'catt aata tatc', ' ')
 
 wordsearch('cat', 'catt;aata;tatc', ';')
 
-If you want to use a newline character as the separator, use the quotaion marks for the docstring
-(replace instances of (triple double quote) with that of the docstring's):
+If you want to use a newline character as the separator, use triple double quotes in the second
+argument with the corresponding newline character as the third argument (minus the backslash escape
+characters):
 
-wordsearch('cat', (triple duoble quote)catt
+wordsearch('cat', \"\"\"catt
 aata
-tatc(triple duoble quote), '\n')
+tatc\"\"\", '\\n')
 """
 
 
 def matrixify(string_grid, separator='\n'):
-    """
+    """Return a matrix out of string_grid.
+
     Args:
         string_grid (str): A string containing non-whitespace and whitespace characters.
         separator (str): A whitespace character used in string_grid.
@@ -28,12 +31,12 @@ def matrixify(string_grid, separator='\n'):
     Returns:
         list: Returns list of the strings of string_grid separated at its whitespace.
     """
-
     return string_grid.split(separator)
 
 
 def coord_char(coord, matrix):
-    """
+    """Return the element of matrix at specified coord.
+
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
         matrix (list): A list containing lines of string.
@@ -41,14 +44,14 @@ def coord_char(coord, matrix):
     Returns:
         str: Returns the string located in the matrix coord.
     """
-
     row_index, column_index = coord
 
     return matrix[row_index][column_index]
 
 
 def convert_to_word(coord_matrix, matrix):
-    """
+    """Return concatenated character strings.
+
     Args:
         coord_matrix (list): A list of coordinate tuples.
         matrix (list): A list containing lines of string.
@@ -56,12 +59,12 @@ def convert_to_word(coord_matrix, matrix):
     Returns:
         str: Returns string equivalent of coord_matrix.
     """
-
     return ''.join([coord_char(coord, matrix) for coord in coord_matrix])
 
 
 def find_base_match(char, matrix):
-    """
+    """Return list of coordinates wherein char matched inside matrix.
+
     Args:
         char (str): A single-length string
         matrix (list): A list containing lines of string.
@@ -71,7 +74,6 @@ def find_base_match(char, matrix):
     Returns:
         list: Returns a coordinate list.
     """
-
     base_matches = [(row_index, column_index) for row_index, row in enumerate(matrix)
                     for column_index, column in enumerate(row)
                     if char == column]
@@ -80,7 +82,8 @@ def find_base_match(char, matrix):
 
 
 def matched_neighbors(coord, second_char, matrix, row_length, column_length):
-    """
+    """Return list of coordinates wherein second_char matched inside matrix.
+
     Args:
         coord (tuple): A coordinate in the matrix with (row, column) format.
         second_char (str): The second character of the word.
@@ -89,9 +92,8 @@ def matched_neighbors(coord, second_char, matrix, row_length, column_length):
         column_length (int): An integer which represents the horizontal length of the matrix.
 
     Returns:
-        list: Returns a list containing the coordinates where second_char matched, inside matrix.
+        list: Returns a list containing the coordinates where second_char matched inside matrix.
     """
-
     row_number, column_number = coord
     neighbors_coordinates = [(row, column) for row in xrange(row_number - 1, row_number + 2)
                              for column in xrange(column_number - 1, column_number + 2)
@@ -103,7 +105,8 @@ def matched_neighbors(coord, second_char, matrix, row_length, column_length):
 
 
 def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
-    """
+    """Return list of tuple coordinates which correspond to a straight line inside the matrix.
+
     Args:
         base_coord (tuple): A coordinate tuple of the starting position.
         targ_coord (tuple): A coordinate tuple of the target position.
@@ -116,7 +119,6 @@ def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
               line when represented in a matrix; Retuns empty tuple if tuple's last coordinate is
               out of matrix bounds.
     """
-
     if word_len == 2:
         return base_coord, targ_coord
 
@@ -133,7 +135,8 @@ def complete_line(base_coord, targ_coord, word_len, row_length, column_length):
 
 
 def complete_match(word, matrix, base_matches, word_len, row_length, column_length):
-    """
+    """Return list of tuple coordinates whose character elements match those of word.
+
     Args:
         word (str): A string of the word to be found.
         matrix (list): A list containing lines of string.
@@ -146,7 +149,6 @@ def complete_match(word, matrix, base_matches, word_len, row_length, column_leng
     Returns:
         list: Returns a list of tuple coordinates.
     """
-
     match_candidates = (complete_line(base, neighbor, word_len, row_length, column_length)
                         for base in base_matches
                         for neighbor in matched_neighbors(base, word[1], matrix, row_length,
@@ -156,7 +158,8 @@ def complete_match(word, matrix, base_matches, word_len, row_length, column_leng
 
 
 def find_matches(word, string_grid, separator='\n'):
-    """
+    """Return list of tuple coordinates whose character elements match those of word.
+
     Args:
         word (str): A string of the word to be found.
         string_grid (str): A string containing non-whitespace and whitespace characters.
@@ -165,7 +168,6 @@ def find_matches(word, string_grid, separator='\n'):
     Returns:
         list: Returns list matrix of the coordinate matches of word against string_grid.
     """
-
     word_len = len(word)
     if isinstance(string_grid, list):
         matrix = string_grid
@@ -183,7 +185,8 @@ def find_matches(word, string_grid, separator='\n'):
 
 
 def wordsearch(word, string_grid, separator='\n'):
-    """
+    """Return length of the list return value of find_matches.
+
     Args:
         word (str): A string of the word to be found.
         string_grid (str): A string containing non-whitespace and whitespace characters.
@@ -192,5 +195,4 @@ def wordsearch(word, string_grid, separator='\n'):
     Returns:
         int: Returns the amount of matches from find_matches.
     """
-
     return len(find_matches(word, string_grid, separator))

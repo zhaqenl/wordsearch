@@ -1,5 +1,4 @@
-"""
-This script is for handling specialized wordsearch input files.
+"""This script is for handling specialized wordsearch input files.
 
 The format for the input file is the following:
 
@@ -12,9 +11,10 @@ The format for the input file is the following:
 ...
 ...
 
-Simply run:
+Run through:
 
-python wordsearch.py `input_file.txt`
+python wordsearch.py FILE
+
 """
 
 
