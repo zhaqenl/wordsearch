@@ -1,6 +1,7 @@
-"""This script is for handling specialized wordsearch input files.
+"""python wordsearch.py FILE
 
-The format for the input file is the following:
+This script is for handling specialized wordsearch input files. The format for the input file is the
+following:
 
 'Number of cases'
 'String grid height'
@@ -10,11 +11,6 @@ The format for the input file is the following:
 ...
 ...
 ...
-
-Run through:
-
-python wordsearch.py FILE
-
 """
 
 
