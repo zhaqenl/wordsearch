@@ -1,5 +1,7 @@
 """
-Script to handle wordsearch input files with the following format:
+This script is for handling specialized wordsearch input files.
+
+The format for the input file is the following:
 
 'Number of cases'
 'String grid height'
