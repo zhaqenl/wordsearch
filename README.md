@@ -1,10 +1,6 @@
 Word Search
 ===========
 
-
-Summary
--------
-
 This is a Python implementation of the [Word Search](https://rosettacode.org/wiki/Word_search)
 puzzle, but with a few modifications, namely:
 
@@ -14,8 +10,17 @@ puzzle, but with a few modifications, namely:
 - There is no hidden word in the grid.
 
 
-Usage
------
+<a name="toc"></a> Table of contents
+------------------------------------
+
+- [Usage](#usage)
+  + [REPL](#repl)
+  + [File input](#input)
+- [Remarks](#remarks)
+
+
+<a name="usage"></a> Usage
+--------------------------
 
 Clone this repo:
 
@@ -23,7 +28,8 @@ Clone this repo:
 $ git clone https://github.com/zhaqenl/wordsearch/ ~/python/wordsearch
 ```
 
-### REPL
+
+### <a name="repl"></a> REPL
 
 Run the following command in your terminal:
 
@@ -73,7 +79,8 @@ tatc""", '\n')
 (0, 3)]]
 ```
 
-### File input
+
+### <a name="input"></a> File input
 
 If you prefer a file as the input of the script, you could create a file whose first line indicates
 the amount of grid-to-word pairs, followed by the row quantity of the first pair, followed by its
@@ -105,3 +112,10 @@ Case 1: 4
 Case 2: 1
 Case 3: 4
 ```
+
+
+<a name="remarks"></a> Remarks
+------------------------------
+
+To learn how I came up with the solution to this project’s problem, proceed to my
+[article](https://zhaqenl.github.io/en/wordsearch/)!
