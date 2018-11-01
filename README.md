@@ -84,7 +84,7 @@ tatc""", '\n')
 
 If you prefer a file as the input of the script, you could create a file whose first line indicates
 the amount of grid-to-word pairs, followed by the row quantity of the first pair, followed by its
-column quantity, then the string grid itself, and finally, the hidden word. See `dummy-input.txt`
+column quantity, then the string grid itself, and finally, the hidden word. See `dummy_input.txt`
 for an example structure.
 
 After creating the `.txt` file, run the following:
