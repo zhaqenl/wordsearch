@@ -1,4 +1,4 @@
-"""python wordsearch.py FILE
+"""python wordsearch.py FILE.
 
 This script is for handling specialized wordsearch input files. The format for the input file is the
 following:
@@ -21,18 +21,20 @@ import core
 PARSER = argparse.ArgumentParser()
 PARSER.add_argument('filename')
 ARGS = PARSER.parse_args()
+SEPARATOR = '\n'
 
 with open(ARGS.filename) as f:
     CASE_COUNT = f.readline().strip('\n')
-    for case in xrange(int(CASE_COUNT)):
+    for case in range(int(CASE_COUNT)):
         sys.stdout.write('Case ')
         sys.stdout.write(str(case + 1))
         sys.stdout.write(': ')
         grid = []
         grid_height_limit = int(f.readline().strip('\n'))
         grid_width = int(f.readline().strip('\n'))
-        for _ in xrange(grid_height_limit):
+        for _ in range(grid_height_limit):
             grid += [f.readline().strip('\n')]
         word = f.readline().strip('\n')
-        print core.wordsearch(word, grid)
+        solver = core.WordsearchSolver(word, grid, SEPARATOR)
+        print(solver.wordsearch())
     sys.stdout.flush()
