@@ -38,45 +38,36 @@ $ python
 >>>
 ```
 
-Once inside the interactive interpreter, type:
+Once inside the interactive interpreter, import `core`, create an instance of the class with the
+required arguments—the word and the grid (if you want to change the separator from the default
+newline character, simply provide it as an argument during the instance creation):
 
 ```
 >>> import core
->>>
-```
-
-If you only want the quantity of matches of a word inside a grid, run:
-
-```
->>> core.wordsearch('cat', """catt
+>>> solver = core.WordsearchSolver('cat', """catt
 ... aata
-... tatc""", '\n')
+... tatc""")
+>>> solver_0 = core.WordsearchSolver('cat', 'catt;aata;tatc', ';')
+>>>
+```
+
+If you only want the quantity of word matches inside the grid, invoke the `wordsearch` instance
+method:
+
+```
+>>> solver.wordsearch()
 4
 >>>
 ```
 
-If you want a different character as a separator, change the separator inside the grid and the
-corresponding separator argument of the function (naturally, use a unique character for the
-separator):
+However, if you want to display the coordinates of the matches, invoke the `find_matches` instance
+method:
 
 ```
->>> core.wordsearch('cat', 'catt aata tatc', ' ')
-4
->>> core.wordsearch('cat', 'catt;aata;tatc', ';')
-4
->>> core.wordsearch('cat', 'cattxaataxtatc', 'x')
-4
-```
-
-However, if you want to display the coordinates, themselves, of the matches, run the `find_matches`
-function inside `core`:
-
-```
->>> core.find_matches('cat', """catt
-aata
-tatc""", '\n')
+>>> solver.find_matches()
 [[(0, 0), (0, 1), (0, 2)], [(0, 0), (1, 0), (2, 0)], [(0, 0), (1, 1), (2, 2)], [(2, 3), (1, 3),
 (0, 3)]]
+>>>
 ```
 
 
